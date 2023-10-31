@@ -7,7 +7,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export async function userRegister(req: Request, res: Response) {
-  const { name, email, password, confirmedPassword, userType } = req.body
+  const { name, userName, email, password, confirmedPassword, userType } =
+    req.body
 
   if (!name || !email || !password || !confirmedPassword) {
     res.json({ message: 'Preencha todos os campos obrigatórios.' }).status(401)
@@ -26,14 +27,14 @@ export async function userRegister(req: Request, res: Response) {
 
   await db.sync()
 
-  const checkUserAlreadyExists = await User.findOne({ where: { email } }).then(
-    (user) => {
-      if (user) {
-        res.json({ message: 'Usuário já cadastrado.' }).status(401)
-        return true
-      }
-    },
-  )
+  const checkUserAlreadyExists = await User.findOne({
+    where: { email },
+  }).then((user) => {
+    if (user) {
+      res.json({ message: 'Usuário já cadastrado.' }).status(401)
+      return true
+    }
+  })
 
   if (checkUserAlreadyExists) return
 
@@ -47,6 +48,7 @@ export async function userRegister(req: Request, res: Response) {
     email,
     password: encryptedPassword,
     userType: userType ?? 'student',
+    userName,
   })
 
   res.json({ message: 'Usuário criado com sucesso!' }).status(201)

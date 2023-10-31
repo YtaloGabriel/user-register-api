@@ -16,14 +16,21 @@ const app = express()
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Nome e Sobrenome.
+ *                 required: true
+ *                 example: John Doe
+ *               userName:
+ *                 type: string
  *                 description: Nome de usuário.
  *                 required: true
- *                 example: John-doe
+ *                 example: john-doe
+ *                 unique: true
  *               email:
  *                 type: string
  *                 description: E-mail do usuário.
  *                 required: true
  *                 example: john-doe@email.com
+ *                 unique: true
  *               password:
  *                 type: string
  *                 description: Senha do usuário.
